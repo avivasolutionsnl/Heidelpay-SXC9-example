@@ -1,0 +1,89 @@
+version: '2.4'
+
+services:
+ mssql:
+  image: microsoft/mssql-server-windows-express
+  mem_limit: 2048m
+  cpu_count: 4
+  volumes:
+    - .\databases:C:\databases
+  environment:
+    ACCEPT_EULA: "Y"
+    sa_password: "my_Sup3rSecret!!"
+    attach_dbs: "[
+      {'dbName':'SitecoreCommerce9_Global','dbFiles':['C:\\\\databases\\\\SitecoreCommerce9_Global_Primary.mdf','C:\\\\databases\\\\SitecoreCommerce9_Global_Primary.ldf']},
+      {'dbName':'SitecoreCommerce9_SharedEnvironments','dbFiles':['C:\\\\databases\\\\SitecoreCommerce9_SharedEnvironments_Primary.mdf','C:\\\\databases\\\\SitecoreCommerce9_SharedEnvironments_Primary.ldf']},
+      {'dbName':'Sitecore_Core','dbFiles':['C:\\\\databases\\\\Sitecore_Core_Primary.mdf','C:\\\\databases\\\\Sitecore_Core_Primary.ldf']},
+      {'dbName':'Sitecore_ExperienceForms','dbFiles':['C:\\\\databases\\\\Sitecore_ExperienceForms_Primary.mdf','C:\\\\databases\\\\Sitecore_ExperienceForms_Primary.ldf']},
+      {'dbName':'Sitecore_MarketingAutomation','dbFiles':['C:\\\\databases\\\\Sitecore_MarketingAutomation_Primary.mdf','C:\\\\databases\\\\Sitecore_MarketingAutomation_Primary.ldf']},
+      {'dbName':'Sitecore_Master','dbFiles':['C:\\\\databases\\\\Sitecore_Master_Primary.mdf','C:\\\\databases\\\\Sitecore_Master_Primary.ldf']},
+      {'dbName':'Sitecore_Processing.Pools','dbFiles':['C:\\\\databases\\\\Sitecore_Processing.Pools_Primary.mdf','C:\\\\databases\\\\Sitecore_Processing.Pools_Primary.ldf']},
+      {'dbName':'Sitecore_Processing.Tasks','dbFiles':['C:\\\\databases\\\\Sitecore_Processing.Tasks_Primary.mdf','C:\\\\databases\\\\Sitecore_Processing.Tasks_Primary.ldf']},
+      {'dbName':'Sitecore_ReferenceData','dbFiles':['C:\\\\databases\\\\Sitecore_ReferenceData_Primary.mdf','C:\\\\databases\\\\Sitecore_ReferenceData_Primary.ldf']},
+      {'dbName':'Sitecore_Reporting','dbFiles':['C:\\\\databases\\\\Sitecore_Reporting_Primary.mdf','C:\\\\databases\\\\Sitecore_Reporting_Primary.ldf']},
+      {'dbName':'Sitecore_Web','dbFiles':['C:\\\\databases\\\\Sitecore_Web_Primary.mdf','C:\\\\databases\\\\Sitecore_Web_Primary.ldf']},
+      {'dbName':'Sitecore_Xdb.Collection.Shard0','dbFiles':['C:\\\\databases\\\\Sitecore_Xdb.Collection.Shard0.mdf','C:\\\\databases\\\\Sitecore_Xdb.Collection.Shard0_log.ldf']},
+      {'dbName':'Sitecore_Xdb.Collection.Shard1','dbFiles':['C:\\\\databases\\\\Sitecore_Xdb.Collection.Shard1_Primary.mdf','C:\\\\databases\\\\Sitecore_Xdb.Collection.Shard1_Primary.ldf']},
+      {'dbName':'Sitecore_Xdb.Collection.ShardMapManager','dbFiles':['C:\\\\databases\\\\Sitecore_Xdb.Collection.ShardMapManager.mdf','C:\\\\databases\\\\Sitecore_Xdb.Collection.ShardMapManager_log.ldf']},
+      {'dbName':'Sitecore_Messaging','dbFiles':['C:\\\\databases\\\\Sitecore_Messaging_Primary.mdf','C:\\\\databases\\\\Sitecore_Messaging_Primary.ldf']}
+    ]"
+
+ solr:
+  image: solr:6.6.2
+  mem_limit: 4096m
+  platform: linux
+  command: -force
+  volumes:
+    - .\cores\SitecoreCatalogItemsScope:/opt/solr/server/solr/SitecoreCatalogItemsScope
+    - .\cores\SitecoreCustomersScope:/opt/solr/server/solr/SitecoreCustomersScope
+    - .\cores\SitecoreOrdersScope:/opt/solr/server/solr/SitecoreOrdersScope
+    - .\cores\Sitecore_fxm_master_index:/opt/solr/server/solr/Sitecore_fxm_master_index
+    - .\cores\Sitecore_fxm_web_index:/opt/solr/server/solr/Sitecore_fxm_web_index
+    - .\cores\Sitecore_marketingdefinitions_master:/opt/solr/server/solr/Sitecore_marketingdefinitions_master
+    - .\cores\Sitecore_marketingdefinitions_web:/opt/solr/server/solr/Sitecore_marketingdefinitions_web
+    - .\cores\Sitecore_marketing_asset_index_web:/opt/solr/server/solr/Sitecore_marketing_asset_index_web
+    - .\cores\Sitecore_marketing_asset_index_master:/opt/solr/server/solr/Sitecore_marketing_asset_index_master
+    - .\cores\Sitecore_suggested_test_index:/opt/solr/server/solr/Sitecore_suggested_test_index
+    - .\cores\Sitecore_testing_index:/opt/solr/server/solr/Sitecore_testing_index  
+    - .\cores\Sitecore_core_index:/opt/solr/server/solr/Sitecore_core_index
+    - .\cores\Sitecore_master_index:/opt/solr/server/solr/Sitecore_master_index
+    - .\cores\Sitecore_web_index:/opt/solr/server/solr/Sitecore_web_index
+    - .\cores\xp0_xdb:/opt/solr/server/solr/xp0_xdb
+    - .\cores\xp0_xdb_rebuild:/opt/solr/server/solr/xp0_xdb_rebuild
+
+ xconnect:
+  image: avivasolutionsnl.azurecr.io/sxc-xconnect:9.0.2
+  volumes:
+    - .\logs\xconnect:C:\inetpub\wwwroot\xconnect\App_data\Logs
+  depends_on:
+    - mssql
+    - solr
+
+ sitecore:
+  build: ./Docker/sitecore
+  cpu_count: 6
+  volumes:
+    - .\logs\sitecore:c:\inetpub\wwwroot\sitecore\App_Data\logs
+    - .\build\website:C:\Workspace
+    - .:c:\vagrant
+  depends_on:
+    - xconnect
+    - mssql
+    - solr
+
+ commerce:
+  build: ./Docker/commerce
+  cpu_count: 4
+  volumes:
+    - .\logs\commerce\CommerceAuthoring_Sc9:C:\inetpub\wwwroot\CommerceAuthoring_Sc9\wwwroot\logs
+    - .\logs\commerce\CommerceMinions_Sc9:C:\inetpub\wwwroot\CommerceMinions_Sc9\wwwroot\logs
+    - .\logs\commerce\CommerceOps_Sc9:C:\inetpub\wwwroot\CommerceOps_Sc9\wwwroot\logs
+    - .\logs\commerce\CommerceShops_Sc9:C:\inetpub\wwwroot\CommerceShops_Sc9\wwwroot\logs
+    - .\logs\commerce\SitecoreIdentityServer:C:\inetpub\wwwroot\SitecoreIdentityServer\wwwroot\logs
+    - .\build\commerce:C:\Workspace
+  depends_on:
+    - xconnect
+    - mssql
+    - solr
+    - sitecore
+  restart: on-failure

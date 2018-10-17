@@ -1,0 +1,21 @@
+﻿@model Sitecore.Commerce.Entities.Carts.Cart
+
+<h1>Cart</h1>
+
+<ul>
+   @foreach(var line in Model.Lines)
+   {
+       <li>
+           @line.Product.ProductName
+       </li>
+   }
+</ul>
+
+<div>
+    Total: @Model.Total
+</div>
+
+<div>
+    @Html.ActionLink("Add product", "Add")
+    @Html.ActionLink("Add shipping info", "AddShippingInfo")
+</div>

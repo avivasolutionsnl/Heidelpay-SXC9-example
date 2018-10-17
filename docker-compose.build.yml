@@ -1,0 +1,14 @@
+# Docker-compose overlay file to build custom images
+# instead of pulling them from the container registry
+version: '2.4'
+
+services:
+ solr:
+  build: ./Docker/solr
+  image: avivasolutionsnl.azurecr.io/mercury-solr:9.0.2
+
+ sitecore:
+  build: ./Docker/sitecore
+
+ commerce:
+  build: ./Docker/commerce

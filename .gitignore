@@ -1,0 +1,123 @@
+/files
+/.vagrant
+/sitecore
+.vs
+
+/logs
+tests_output
+output
+node_modules
+dist
+.idea
+
+###################
+# compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.cache
+*.suo
+# Include dlls if they�re in the NuGet packages directory
+!/packages/*/lib/*.dll
+!/packages/*/lib/*/*.dll
+# Include dlls if they're in the CommonReferences directory
+!*CommonReferences/*.dll
+
+####################
+# VS Upgrade stuff #
+####################
+UpgradeLog.XML
+_UpgradeReport_Files/
+###############
+# Directories #
+###############
+bin/
+obj/
+output/
+build/
+reports/
+TestResults/
+nonetestable/
+logs/
+cores/
+databases/
+###################
+# Web publish log #
+###################
+*.Publish.xml
+#############
+# Resharper #
+#############
+/_ReSharper.*
+*.ReSharper.*
+############
+# Packages #
+############
+# it�s better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+######################
+# Logs and databases #
+######################
+*.log
+*.sqlite
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+[Bb]in
+[Oo]bj
+[Tt]est[Rr]esults
+*.suo
+*.user
+*.[Cc]ache
+*[Rr]esharper*
+packages
+NuGet.exe
+_[Ss]cripts
+*.exe
+*.dll
+*.nupkg
+*.ncrunchsolution
+*.dot[Cc]over
+source/node_modules/
+source/.vs/
+commerce/~$foodcatalog.xlsm
+source/Mercury.Web/App_Data/serialization/dev/master/sitecore/templates/Commerce/Catalog Generated
+source/Mercury.Web/App_Data/serialization/production/master/sitecore/templates/Commerce/Catalog Generated
+.localhistory
+
+source/.vs/config/applicationhost.config
+/source/Mercury.Web/App_Data/serialization/content/Commerce Templates/Commerce/Catalog/Commerce Product/Commerce/Category_0ba9bf45-e09e-407c-bb55-9fc7085e35c0.yml
+/source/Mercury.Web/App_Data/serialization/content/Commerce Templates/Commerce/Catalog/Commerce Product/Commerce/Description_f9cb74ab-94c9-41f4-8ce9-6c6cf7811ebb.yml
+!/source/Mercury.Web/assets/icons
+!/source/Mercury.Web/assets/dev/icons
+/Output
+source/Mercury.Html/bower_components/
+bower_components/
+source/Mercury.Html/assets/css/style.css
+docs/api/.manifest
+source/\.DS_Store
+.DS_Store
+databases/
+cores/
+test/e2e/screens
+cores/
+##################
+# Documentation  #
+##################
+# Include dlls from postprocessor
+!/docs/mercury_template/plugins/*.*
