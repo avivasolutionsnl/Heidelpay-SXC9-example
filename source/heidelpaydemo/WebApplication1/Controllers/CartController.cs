@@ -8,6 +8,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Sitecore.Commerce.Entities.Shipping;
 using Sitecore.Commerce.Services.Payments;
+using Heidelpay.Connect.Entities;
+using Sitecore.Commerce.Services.Orders;
+using Heidelpay.Connect;
 
 namespace WebApplication1.Controllers
 {
@@ -107,6 +110,42 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+
+        public ActionResult AddPaymentInfo()
+        {
+            var request = new AddPaymentInfoRequest(Cart, new List<PaymentInfo>
+            {
+                new HeidelpayPaymentInfo
+                {
+                    Amount = Cart.Total.Amount,
+                    PaymentMethodID = "c16ce432-b7e6-44ec-a9fc-01c4fc5caaca"
+                }
+            });
+
+            var result = csp.AddPaymentInfo(request);
+
+            if (!result.Success)
+            {
+                throw new InvalidOperationException(string.Join(",", result.SystemMessages.Select(x => x.Message)));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult ToOrder()
+        {
+            var cart = Cart;
+            cart.Email = "testme@hotmail.com";
+            var result = new OrderServiceProvider().SubmitVisitorOrder(new SubmitVisitorOrderRequest(cart));
+
+            if (!result.Success)
+            {
+                throw new InvalidOperationException(string.Join(",", result.SystemMessages.Select(x => x.Message)));
+            }
+
+            string redirectUrl = new HeidelpayServiceProvider().RequestPayment((CommerceOrder)result.Order);
+
+            return Redirect(redirectUrl);
+        }
     }
 }

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "website", "WebApplication1\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Payment.Heidelpay", "Plugin.Payments.Heidelpay\Plugin.Payment.Heidelpay.csproj", "{7C15ECBE-A438-48F9-9B25-E8C38EAB419B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sitecore.Commerce.ServiceProxy", "Sitecore.Commerce.ServiceProxy\Sitecore.Commerce.ServiceProxy.csproj", "{D8ED2F59-58A3-4150-B888-2CE9FA314392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heidelpay.Connect", "Heidelpay.Connect\Heidelpay.Connect.csproj", "{1DE9B2D1-5E85-4806-BE95-2B92FF05E08C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{7C15ECBE-A438-48F9-9B25-E8C38EAB419B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C15ECBE-A438-48F9-9B25-E8C38EAB419B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C15ECBE-A438-48F9-9B25-E8C38EAB419B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8ED2F59-58A3-4150-B888-2CE9FA314392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8ED2F59-58A3-4150-B888-2CE9FA314392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8ED2F59-58A3-4150-B888-2CE9FA314392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8ED2F59-58A3-4150-B888-2CE9FA314392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DE9B2D1-5E85-4806-BE95-2B92FF05E08C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE9B2D1-5E85-4806-BE95-2B92FF05E08C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE9B2D1-5E85-4806-BE95-2B92FF05E08C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE9B2D1-5E85-4806-BE95-2B92FF05E08C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

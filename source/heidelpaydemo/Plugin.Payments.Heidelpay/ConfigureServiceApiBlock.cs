@@ -51,7 +51,7 @@ namespace Plugin.Payment.Heidelpay
             
             var updateConfiguration = modelBuilder.Action("RequestPayment");
             updateConfiguration.Parameter<string>("orderId");
-            updateConfiguration.ReturnsFromEntitySet<CommerceCommand>("Commands");
+            updateConfiguration.Returns<string>();
 
             return Task.FromResult(modelBuilder);
         }
