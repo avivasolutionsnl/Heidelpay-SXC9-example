@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment
 {
     [PipelineDisplayName("Plugin.Payment.Heidelpay:Pipelines:IRequestPaymentPipeline")]
-    public interface IRequestPaymentPipeline : IPipeline<RequestPaymentArgument, string, CommercePipelineExecutionContext>, IPipelineBlock<RequestPaymentArgument, string, CommercePipelineExecutionContext>, IPipelineBlock, IPipeline
+    public interface IRequestPaymentPipeline : IPipeline<RequestPaymentArgument, bool, CommercePipelineExecutionContext>, IPipelineBlock<RequestPaymentArgument, bool, CommercePipelineExecutionContext>, IPipelineBlock, IPipeline
     {
     }
 

@@ -66,9 +66,9 @@ namespace Plugin.Payment.Heidelpay.Controllers
 
             RequestPaymentCommand command = Command<RequestPaymentCommand>();
 
-            string result = await command.Process(CurrentContext, orderId);
+            bool result = await command.Process(CurrentContext, orderId);
 
-            return new ObjectResult(result);
+            return new ObjectResult(command);
         }
     }
 }

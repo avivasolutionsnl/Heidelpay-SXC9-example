@@ -19,12 +19,12 @@ namespace Plugin.Payment.Heidelpay.Commands
             this.requestPaymentPipeline = requestPaymentPipeline;
         }
 
-        public virtual async Task<string> Process(CommerceContext commerceContext, string orderId)
+        public virtual async Task<bool> Process(CommerceContext commerceContext, string orderId)
         {
             // Run the pipeline
             using (CommandActivity.Start(commerceContext, this))
             {
-                string result = null;
+                bool result = false;
 
                 await PerformTransaction(commerceContext, (async () =>
                 {

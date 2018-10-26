@@ -18,6 +18,8 @@ namespace Heidelpay.Connect
                 OrderId = order.OrderID
             };
 
+            request.SetShopName(order.ShopName);
+
             return RunPipeline<RequestPaymentRequest, RequestPaymentResult>("heidelpay.requestPayment", request).RedirectUrl;
         }
     }

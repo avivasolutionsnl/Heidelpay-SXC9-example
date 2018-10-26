@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Payment.Heidelpay.Models;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Orders;
 using Sitecore.Framework.Conditions;
 using Sitecore.Framework.Pipelines;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
 {
     [PipelineDisplayName("Plugin.Payment.Heidelpay:Blocks:RequestPaymentBlock")]
-    public class RequestPaymentBlock : PipelineBlock<RequestPaymentArgument, string, CommercePipelineExecutionContext>
+    public class RequestPaymentBlock : PipelineBlock<RequestPaymentArgument, bool, CommercePipelineExecutionContext>
     {
         private IGetOrderPipeline getOrderPipeline;
         private IPersistEntityPipeline persistEntityPipeline;
@@ -25,7 +27,7 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
             this.findEntitiesInListPipeline = findEntitiesInListPipeline;
         }
 
-        public override async Task<string> Run(RequestPaymentArgument arg, CommercePipelineExecutionContext context)
+        public override async Task<bool> Run(RequestPaymentArgument arg, CommercePipelineExecutionContext context)
         {
             Condition.Requires(arg).IsNotNull($"{this.Name}: The argument cannot be null.");
 
@@ -39,12 +41,16 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
                                                 new object[] { arg.OrderId },
                                                 $"Entity {0} was not found.");
 
-                return null;
+                return false;
             }
 
             var request = BuildRequest(order);
 
-            return await Post(request);
+            string redirectUrl = await Post(request);
+
+            context.CommerceContext.AddModel(new PaymentRequested(redirectUrl));
+
+            return true;
         }
 
         private Dictionary<string, string> BuildRequest(Order order)

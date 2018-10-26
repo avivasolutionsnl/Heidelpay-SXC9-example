@@ -245,6 +245,10 @@
       <Project>{1de9b2d1-5e85-4806-be95-2b92ff05e08c}</Project>
       <Name>Heidelpay.Connect</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sitecore.Commerce.ServiceProxy\Sitecore.Commerce.ServiceProxy.csproj">
+      <Project>{d8ed2f59-58a3-4150-b888-2ce9fa314392}</Project>
+      <Name>Sitecore.Commerce.ServiceProxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
