@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Plugin.Payment.Heidelpay.Models;
+using Plugin.Payment.Heidelpay.Policies;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Orders;
 using Sitecore.Framework.Conditions;
@@ -44,7 +45,7 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
                 return false;
             }
 
-            var request = BuildRequest(order);
+            var request = BuildRequest(context.CommerceContext, order);
 
             string redirectUrl = await Post(request);
 
@@ -53,22 +54,24 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
             return true;
         }
 
-        private Dictionary<string, string> BuildRequest(Order order)
+        private Dictionary<string, string> BuildRequest(CommerceContext context, Order order)
         {
+            var policy = context.GetPolicy<HeidelpayPolicy>();
+
             return new Dictionary<string, string>
             {
                 {"REQUEST.VERSION", "1.0"},
-                {"TRANSACTION.CHANNEL", "31HA07BC8142C5A171749A60D979B6E4" },
+                {"TRANSACTION.CHANNEL", policy.TransactionChannel },
                 {"IDENTIFICATION.TRANSACTIONID", order.OrderConfirmationId },
-                {"TRANSACTION.MODE", "INTEGRATOR_TEST" },
+                {"TRANSACTION.MODE", policy.TransactionMode },
                 {"PRESENTATION.AMOUNT", order.Totals.GrandTotal.Amount.ToString() },
                 {"PRESENTATION.CURRENCY", "EUR" },
                 {"PAYMENT.CODE", "CC.DB" },
-                {"SECURITY.SENDER", "31HA07BC8142C5A171745D00AD63D182" },
-                {"USER.LOGIN", "31ha07bc8142c5a171744e5aef11ffd3" },
-                {"USER.PWD", "93167DE7" },
+                {"SECURITY.SENDER", policy.SecuritySender },
+                {"USER.LOGIN", policy.UserLogin },
+                {"USER.PWD", policy.UserPassword },
                 {"FRONTEND.ENABLED", "true" },
-                {"FRONTEND.RESPONSE_URL", "http://www.merchantshop.com/paymentResult?jsessionid=12343215413243214213" }
+                {"FRONTEND.RESPONSE_URL", policy.FrontendResponseUrl }
             };
         }
 

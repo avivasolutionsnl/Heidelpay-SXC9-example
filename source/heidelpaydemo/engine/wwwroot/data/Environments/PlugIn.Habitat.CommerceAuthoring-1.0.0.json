@@ -243,7 +243,7 @@
             "PhoneNumber"
           ]
         },
-        "Domains": [ "Storefront", "extranet", "CommerceUsers" ] 
+        "Domains": [ "Storefront", "extranet", "CommerceUsers" ]
       },
       {
         "$type": "Sitecore.Commerce.Plugin.Customers.CustomersRemovePolicy, Sitecore.Commerce.Plugin.Customers",
@@ -529,6 +529,15 @@
       },
       {
         "$type": "Sitecore.Commerce.Core.IgnorePublishedPolicy, Sitecore.Commerce.Core"
+      },
+      {
+        "$type": "Plugin.Payment.Heidelpay.Policies.HeidelpayPolicy, Plugin.Payment.Heidelpay",
+        "TransactionChannel": "31HA07BC8142C5A171749A60D979B6E4",
+        "TransactionMode": "INTEGRATOR_TEST",
+        "SecuritySender": "31HA07BC8142C5A171745D00AD63D182",
+        "UserLogin": "31ha07bc8142c5a171744e5aef11ffd3",
+        "UserPassword": "93167DE7",
+        "FrontendResponseUrl": "http://www.merchantshop.com/paymentResult?jsessionid=12343215413243214213"
       }
     ]
   }
