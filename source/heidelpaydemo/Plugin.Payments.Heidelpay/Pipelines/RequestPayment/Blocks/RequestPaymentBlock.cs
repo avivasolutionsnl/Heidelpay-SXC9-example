@@ -7,9 +7,7 @@ using Sitecore.Framework.Conditions;
 using Sitecore.Framework.Pipelines;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 
 namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
@@ -18,13 +16,11 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
     public class RequestPaymentBlock : PipelineBlock<RequestPaymentArgument, bool, CommercePipelineExecutionContext>
     {
         private IGetOrderPipeline getOrderPipeline;
-        private IPersistEntityPipeline persistEntityPipeline;
         private readonly IFindEntitiesInListPipeline findEntitiesInListPipeline;
 
-        public RequestPaymentBlock(IGetOrderPipeline getOrderPipeline, IPersistEntityPipeline persistEntityPipeline, IFindEntitiesInListPipeline findEntitiesInListPipeline)
+        public RequestPaymentBlock(IGetOrderPipeline getOrderPipeline, IFindEntitiesInListPipeline findEntitiesInListPipeline)
         {
             this.getOrderPipeline = getOrderPipeline;
-            this.persistEntityPipeline = persistEntityPipeline;
             this.findEntitiesInListPipeline = findEntitiesInListPipeline;
         }
 

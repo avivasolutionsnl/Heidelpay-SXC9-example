@@ -10,6 +10,8 @@ namespace Plugin.Payment.Heidelpay
 
     using Microsoft.Extensions.DependencyInjection;
     using Plugin.Payment.Heidelpay.Pipelines.GetPaymentMethods.Blocks;
+    using Plugin.Payment.Heidelpay.Pipelines.HandleResponse;
+    using Plugin.Payment.Heidelpay.Pipelines.HandleResponse.Blocks;
     using Plugin.Payment.Heidelpay.Pipelines.RequestPayment;
     using Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks;
     using Sitecore.Commerce.Core;
@@ -50,6 +52,11 @@ namespace Plugin.Payment.Heidelpay
                         .AddPipeline<IRequestPaymentPipeline, RequestPaymentPipeline>(d =>
                         {
                             d.Add<RequestPaymentBlock>();
+                        })
+                        .AddPipeline<IHandleResponsePipeline, HandleResponsePipeline>(d =>
+                        {
+                            d.Add<ValidateResponseBlock>();
+                            d.Add<HandleResponseBlock>();
                         })
                         .ConfigurePipeline<IRunningPluginsPipeline>(c =>
                         {

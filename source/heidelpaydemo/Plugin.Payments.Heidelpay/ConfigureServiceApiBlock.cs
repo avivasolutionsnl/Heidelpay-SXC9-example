@@ -6,6 +6,7 @@
 
 namespace Plugin.Payment.Heidelpay
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.OData.Builder;
     using Plugin.Payment.Heidelpay.Components;
@@ -52,6 +53,10 @@ namespace Plugin.Payment.Heidelpay
             var updateConfiguration = modelBuilder.Action("RequestPayment");
             updateConfiguration.Parameter<string>("orderId");
             updateConfiguration.ReturnsFromEntitySet<CommerceCommand>("Commands");
+
+            var handleResponse = modelBuilder.Action("HandleResponse");
+            handleResponse.Parameter<IEnumerable<Models.Parameter>>("parameters");
+            handleResponse.ReturnsFromEntitySet<CommerceCommand>("Commands");
 
             return Task.FromResult(modelBuilder);
         }

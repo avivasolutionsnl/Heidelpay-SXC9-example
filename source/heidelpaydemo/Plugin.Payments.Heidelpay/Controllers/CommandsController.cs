@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http.OData;
 using Microsoft.AspNetCore.Mvc;
@@ -67,6 +68,23 @@ namespace Plugin.Payment.Heidelpay.Controllers
             RequestPaymentCommand command = Command<RequestPaymentCommand>();
 
             bool result = await command.Process(CurrentContext, orderId);
+
+            return new ObjectResult(command);
+        }
+
+        [HttpPut]
+        [Route("HandleResponse()")]
+        public async Task<IActionResult> HandleResponse([FromBody] ODataActionParameters value)
+        {
+            if (!ModelState.IsValid || value == null)
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
+
+            IEnumerable<Models.Parameter> parameters = JsonConvert.DeserializeObject<IEnumerable<Models.Parameter>>(value["parameters"].ToString());
+            HandleResponseCommand command = Command<HandleResponseCommand>();
+
+            bool result = await command.Process(CurrentContext, parameters.ToDictionary(k => k.Key, v => v.Value));
 
             return new ObjectResult(command);
         }
