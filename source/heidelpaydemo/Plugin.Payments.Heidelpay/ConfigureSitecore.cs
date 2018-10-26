@@ -12,9 +12,11 @@ namespace Plugin.Payment.Heidelpay
     using Plugin.Payment.Heidelpay.Pipelines.GetPaymentMethods.Blocks;
     using Plugin.Payment.Heidelpay.Pipelines.HandleResponse;
     using Plugin.Payment.Heidelpay.Pipelines.HandleResponse.Blocks;
+    using Plugin.Payment.Heidelpay.Pipelines.PendingOrdersMinionPipeline.Blocks;
     using Plugin.Payment.Heidelpay.Pipelines.RequestPayment;
     using Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks;
     using Sitecore.Commerce.Core;
+    using Sitecore.Commerce.Plugin.Orders;
     using Sitecore.Commerce.Plugin.Payments;
     using Sitecore.Framework.Configuration;
     using Sitecore.Framework.Pipelines.Definitions.Extensions;
@@ -49,6 +51,10 @@ namespace Plugin.Payment.Heidelpay
                         {
                             d.Replace<Sitecore.Commerce.Plugin.Management.TranslateItemsToPaymentOptionsBlock, TranslateItemsToPaymentOptionsBlock>();
                         })
+                         .ConfigurePipeline<IPendingOrdersMinionPipeline>(d =>
+                         {
+                             d.Add<ValidatePaymentBlock>().After<ValidatePendingOrderBlock>();
+                         })
                         .AddPipeline<IRequestPaymentPipeline, RequestPaymentPipeline>(d =>
                         {
                             d.Add<RequestPaymentBlock>();
