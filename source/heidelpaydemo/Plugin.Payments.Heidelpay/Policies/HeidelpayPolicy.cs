@@ -4,6 +4,8 @@ namespace Plugin.Payment.Heidelpay.Policies
 {
     public class HeidelpayPolicy : Policy
     {
+        public string Url { get; set; }
+
         public string TransactionChannel { get; set; }
 
         public string TransactionMode { get; set; }

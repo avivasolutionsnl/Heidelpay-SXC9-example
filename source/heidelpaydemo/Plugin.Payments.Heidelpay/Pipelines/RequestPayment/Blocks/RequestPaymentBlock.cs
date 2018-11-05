@@ -41,24 +41,24 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
                 return false;
             }
 
-            var request = BuildRequest(context.CommerceContext, order);
+            var policy = context.CommerceContext.GetPolicy<HeidelpayPolicy>();
 
-            string redirectUrl = await Post(request);
+            var request = BuildRequest(policy, order);
+
+            string redirectUrl = await Post(policy.Url, request);
 
             context.CommerceContext.AddModel(new PaymentRequested(redirectUrl));
 
             return true;
         }
 
-        private Dictionary<string, string> BuildRequest(CommerceContext context, Order order)
+        private Dictionary<string, string> BuildRequest(HeidelpayPolicy policy, Order order)
         {
-            var policy = context.GetPolicy<HeidelpayPolicy>();
-
             return new Dictionary<string, string>
             {
                 {"REQUEST.VERSION", "1.0"},
                 {"TRANSACTION.CHANNEL", policy.TransactionChannel },
-                {"IDENTIFICATION.TRANSACTIONID", order.OrderConfirmationId },
+                {"IDENTIFICATION.TRANSACTIONID", order.FriendlyId },
                 {"TRANSACTION.MODE", policy.TransactionMode },
                 {"PRESENTATION.AMOUNT", order.Totals.GrandTotal.Amount.ToString() },
                 {"PRESENTATION.CURRENCY", "EUR" },
@@ -71,13 +71,13 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
             };
         }
 
-        private async Task<string> Post(Dictionary<string, string> parameters)
+        private async Task<string> Post(string url, Dictionary<string, string> parameters)
         {
             var client = new HttpClient();
             
             var content = new FormUrlEncodedContent(parameters);
 
-            var response = await client.PostAsync("https://test-heidelpay.hpcgw.net/ngw/post", content);
+            var response = await client.PostAsync(url, content);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -85,8 +85,8 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
             }
 
             var body = await response.Content.ReadAsStringAsync();
-
-            var values = System.Web.HttpUtility.ParseQueryString(body);
+            
+            var values = System.Web.HttpUtility.ParseQueryString(body.Replace("\n", ""));
 
             if(values["PROCESSING.RESULT"] == "NOK")
             {

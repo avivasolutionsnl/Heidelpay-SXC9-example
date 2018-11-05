@@ -81,7 +81,7 @@ namespace Plugin.Payment.Heidelpay.Controllers
                 return new BadRequestObjectResult(ModelState);
             }
 
-            IEnumerable<Models.Parameter> parameters = JsonConvert.DeserializeObject<IEnumerable<Models.Parameter>>(value["parameters"].ToString());
+            IEnumerable<Models.Parameter> parameters = JsonConvert.DeserializeObject<Models.Parameter[]>(value["parameters"].ToString());
             HandleResponseCommand command = Command<HandleResponseCommand>();
 
             bool result = await command.Process(CurrentContext, parameters.ToDictionary(k => k.Key, v => v.Value));

@@ -55,7 +55,7 @@ namespace Plugin.Payment.Heidelpay
             updateConfiguration.ReturnsFromEntitySet<CommerceCommand>("Commands");
 
             var handleResponse = modelBuilder.Action("HandleResponse");
-            handleResponse.Parameter<IEnumerable<Models.Parameter>>("parameters");
+            handleResponse.CollectionParameter<Models.Parameter>("parameters");
             handleResponse.ReturnsFromEntitySet<CommerceCommand>("Commands");
 
             return Task.FromResult(modelBuilder);

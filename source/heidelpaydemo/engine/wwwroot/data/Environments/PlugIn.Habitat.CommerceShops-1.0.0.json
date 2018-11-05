@@ -3,22 +3,24 @@
   "ArtifactStoreId": "78A1EA61-1F37-42A7-AC89-9A3F46D60CA5",
   "Components": {
     "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Component, Sitecore.Commerce.Core]], mscorlib",
-    "$values": [{
-      "$type": "Sitecore.Commerce.Plugin.ManagedLists.ListMembershipsComponent, Sitecore.Commerce.Plugin.ManagedLists",
-      "Memberships": {
-        "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-        "$values": ["CommerceEnvironments"]
-      },
-      "Id": "efe49ff743d34b649fffcof293615cd9",
-      "Policies": {
-        "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Policy, Sitecore.Commerce.Core]], mscorlib",
-        "$values": []
-      },
-      "ChildComponents": {
-        "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Component, Sitecore.Commerce.Core]], mscorlib",
-        "$values": []
+    "$values": [
+      {
+        "$type": "Sitecore.Commerce.Plugin.ManagedLists.ListMembershipsComponent, Sitecore.Commerce.Plugin.ManagedLists",
+        "Memberships": {
+          "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+          "$values": [ "CommerceEnvironments" ]
+        },
+        "Id": "efe49ff743d34b649fffcof293615cd9",
+        "Policies": {
+          "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Policy, Sitecore.Commerce.Core]], mscorlib",
+          "$values": []
+        },
+        "ChildComponents": {
+          "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Component, Sitecore.Commerce.Core]], mscorlib",
+          "$values": []
+        }
       }
-    }]
+    ]
   },
   "DateCreated": "2016-09-23T18:04:08.1660038Z",
   "DateUpdated": "2016-09-23T18:04:08.1760227Z",
@@ -500,12 +502,13 @@
       },
       {
         "$type": "Plugin.Payment.Heidelpay.Policies.HeidelpayPolicy, Plugin.Payment.Heidelpay",
+        "Url": "https://test-heidelpay.hpcgw.net/sgw/gtwu",
         "TransactionChannel": "31HA07BC8142C5A171749A60D979B6E4",
         "TransactionMode": "INTEGRATOR_TEST",
         "SecuritySender": "31HA07BC8142C5A171745D00AD63D182",
         "UserLogin": "31ha07bc8142c5a171744e5aef11ffd3",
         "UserPassword": "93167DE7",
-        "FrontendResponseUrl": "http://www.merchantshop.com/paymentResult?jsessionid=12343215413243214213"
+        "FrontendResponseUrl": "http://5be31f5a.ngrok.io/heidelpay/response"
       }
     ]
   }
