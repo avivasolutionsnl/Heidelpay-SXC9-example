@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Payment.Heidelpay.Components;
 using Plugin.Payment.Heidelpay.Models;
 using Plugin.Payment.Heidelpay.Policies;
 using Sitecore.Commerce.Core;
@@ -42,7 +43,7 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
             }
 
             var policy = context.CommerceContext.GetPolicy<HeidelpayPolicy>();
-
+            
             var request = BuildRequest(policy, order);
 
             string redirectUrl = await Post(policy.Url, request);
@@ -54,6 +55,8 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
 
         private Dictionary<string, string> BuildRequest(HeidelpayPolicy policy, Order order)
         {
+            var component = order.GetComponent<HeidelpayPaymentComponent>();
+
             return new Dictionary<string, string>
             {
                 {"REQUEST.VERSION", "1.0"},
@@ -67,7 +70,14 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
                 {"USER.LOGIN", policy.UserLogin },
                 {"USER.PWD", policy.UserPassword },
                 {"FRONTEND.ENABLED", "true" },
-                {"FRONTEND.RESPONSE_URL", policy.FrontendResponseUrl }
+                {"FRONTEND.RESPONSE_URL", policy.FrontendResponseUrl },
+                {"NAME.GIVEN", component.BillingParty.FirstName},
+                {"NAME.FAMILY", component.BillingParty.LastName},
+                {"ADDRESS.STREET", component.BillingParty.Address1 },
+                {"ADDRESS.ZIP", component.BillingParty.ZipPostalCode },
+                {"ADDRESS.CITY", component.BillingParty.City },
+                {"ADDRESS.STATE", component.BillingParty.State },
+                {"ADDRESS.COUNTRY", component.BillingParty.CountryCode }
             };
         }
 

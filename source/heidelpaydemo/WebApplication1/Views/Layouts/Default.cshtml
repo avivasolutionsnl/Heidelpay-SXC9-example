@@ -1,4 +1,5 @@
 ﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Analytics.Extensions
 
 @{
     Layout = null;
@@ -10,6 +11,45 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Default</title>
+    @Html.Sitecore().VisitorIdentification()
+    <style>
+        body {
+            font-size: 16px;
+            line-height: 1.6;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-align: center
+        }
+
+        .steps li {
+            display: inline-block;
+            border: 1px black solid;
+            padding: 20px 50px 50px;
+            font-size: 20px;
+            vertical-align: top;
+            background-color: lightgray;
+        }
+
+        .steps li span {
+            display: block;
+            font-size: 14px;
+        }
+
+        .steps li.active {
+            background-color: white;
+            font-weight: bold
+        }
+        
+        fieldset {
+            display: block;
+            margin-left: 2px;
+            margin-right: 2px;
+            padding-top: 0.35em;
+            padding-bottom: 0.625em;
+            padding-left: 0.75em;
+            padding-right: 0.75em;
+            border: 2px groove (internal value);
+        }
+    </style>
 </head>
 <body>
     <div>

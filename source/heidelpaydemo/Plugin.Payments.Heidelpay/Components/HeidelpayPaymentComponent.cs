@@ -1,6 +1,6 @@
-﻿using Sitecore.Commerce.Plugin.Payments;
+﻿using Sitecore.Commerce.Core;
+using Sitecore.Commerce.Plugin.Payments;
 using System;
-
 
 namespace Plugin.Payment.Heidelpay.Components
 {
@@ -14,5 +14,7 @@ namespace Plugin.Payment.Heidelpay.Components
         public bool IsSettled { get; set; }
 
         public DateTimeOffset? SettledAt { get; set; }
+
+        public Party BillingParty { get; set; }
     }
 }

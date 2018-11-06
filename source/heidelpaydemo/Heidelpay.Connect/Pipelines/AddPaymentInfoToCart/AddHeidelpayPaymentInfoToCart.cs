@@ -43,6 +43,8 @@ namespace Heidelpay.Connect.Pipelines.AddPaymentInfoToCart
 
             foreach(var heidelpayPayment in heidelpayPayments)
             {
+                CommerceParty entity = cart.Parties.FirstOrDefault(a => a.ExternalId != null && a.ExternalId.Equals(heidelpayPayment.PartyID, StringComparison.OrdinalIgnoreCase)) as CommerceParty;
+                Assert.IsNotNull(entity, "Billing address can not be null");
 
                 var heidelpayPaymentComponent = new HeidelpayPaymentComponent
                 {
@@ -51,9 +53,12 @@ namespace Heidelpay.Connect.Pipelines.AddPaymentInfoToCart
                     {
                         EntityTarget = heidelpayPayment.PaymentMethodID
                     },
-                    Amount = Money.CreateMoney(heidelpayPayment.Amount)
+                    Amount = Money.CreateMoney(heidelpayPayment.Amount),
+                    BillingParty = TranslateEntityToParty(entity, new Party(), result)
                 };
-                    
+
+                heidelpayPaymentComponent.BillingParty.ExternalId = entity.ExternalId;
+
                 var command = Proxy.DoCommand(container.AddHeidelpayPayment(cart.ExternalId, heidelpayPaymentComponent));
             }
 

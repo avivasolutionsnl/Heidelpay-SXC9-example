@@ -1,23 +1,31 @@
-﻿@model Sitecore.Commerce.Entities.Carts.Cart
+﻿@model website.Models.CartModel
 
 <h1>Cart</h1>
 
 <ul>
-   @foreach(var line in Model.Lines)
+   @foreach(var line in Model.Cart.Lines)
    {
-       <li>
-           @line.Product.ProductName
-       </li>
+    <li>
+        @line.Product.ProductName - @line.Quantity
+    </li>
    }
 </ul>
 
 <div>
-    Total: @Model.Total
+    Total: @Model.Cart.Total.Amount EURO
 </div>
 
 <div>
-    @Html.ActionLink("Add product", "Add")
-    @Html.ActionLink("Add shipping info", "AddShippingInfo")
+
+    @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post))
+    {
+        @Html.Sitecore().FormHandler("Cart", "Add")
+
+        @Html.DropDownList("ItemId", Model.SellableItems.Select(s => new SelectListItem { Text = s.DisplayName, Value = s.ItemId.ToString() }))
+
+        <input type="submit" />
+    }
+
     @Html.ActionLink("Add payment info", "AddPaymentInfo")
     @Html.ActionLink("Pay", "ToOrder")
 </div>

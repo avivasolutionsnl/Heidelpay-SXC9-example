@@ -6,6 +6,7 @@ using Sitecore.Commerce.Engine.Connect.Entities;
 using Sitecore.Commerce.Engine.Connect.Pipelines.Arguments;
 using Sitecore.Commerce.Pipelines;
 using Sitecore.Diagnostics;
+using Sitecore.Pipelines;
 
 namespace Heidelpay.Connect.Pipelines.TranslateCartToEntity
 {
@@ -25,17 +26,26 @@ namespace Heidelpay.Connect.Pipelines.TranslateCartToEntity
             var heidelpayPaymentComponents = request.TranslateSource.Components.OfType<HeidelpayPaymentComponent>().ToList();
 
             var paymentInfoList = new List<HeidelpayPaymentInfo>();
+            var parties = new List<CommerceParty>();
 
             heidelpayPaymentComponents.ForEach(component => {
+                var partyToEntityRequest = new TranslatePartyToEntityRequest { TranslateSource = component.BillingParty };
+                var partyToEntityResult = new TranslatePartyToEntityResult();
+                CorePipeline.Run("translate.partyToEntity", new ServicePipelineArgs(partyToEntityRequest, partyToEntityResult));
+
+                parties.Add(partyToEntityResult.TranslatedEntity);
+
                 paymentInfoList.Add(new HeidelpayPaymentInfo
                 {
                     ExternalId = component.Id,
                     PaymentMethodID = component.PaymentMethod.EntityTarget,
-                    Amount = component.Amount?.Amount ?? decimal.Zero
+                    Amount = component.Amount?.Amount ?? decimal.Zero,
+                    PartyID = partyToEntityResult.TranslatedEntity.ExternalId
                 });
             });
 
             cart.Payment = result.TranslatedEntity.Payment.Union(paymentInfoList).ToList();
+            cart.Parties = result.TranslatedEntity.Parties.Union(parties).ToList();
         }
     }
 }

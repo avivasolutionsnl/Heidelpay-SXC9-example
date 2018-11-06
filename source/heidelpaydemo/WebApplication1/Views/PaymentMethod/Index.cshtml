@@ -1,0 +1,30 @@
+﻿@model website.Models.PaymentMethodModel
+
+@using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post))
+{
+    @Html.Sitecore().FormHandler("PaymentMethod", "Add")
+
+    <fieldset>
+
+        @Html.LabelFor(x => x.Party.FirstName);
+        @Html.EditorFor(x => x.Party.FirstName);
+
+        @Html.LabelFor(x => x.Party.LastName);
+        @Html.EditorFor(x => x.Party.LastName);
+
+        @Html.LabelFor(x => x.Party.Address1);
+        @Html.EditorFor(x => x.Party.Address1);
+
+        @Html.LabelFor(x => x.Party.ZipPostalCode);
+        @Html.EditorFor(x => x.Party.ZipPostalCode);
+
+        @Html.LabelFor(x => x.Party.State);
+        @Html.EditorFor(x => x.Party.State);
+
+        @Html.LabelFor(x => x.Party.CountryCode);
+        @Html.EditorFor(x => x.Party.CountryCode);
+
+        <input type="submit" />
+
+    </fieldset>
+}
