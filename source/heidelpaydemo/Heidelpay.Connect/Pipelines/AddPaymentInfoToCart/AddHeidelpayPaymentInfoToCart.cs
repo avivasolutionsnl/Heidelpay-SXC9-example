@@ -44,7 +44,7 @@ namespace Heidelpay.Connect.Pipelines.AddPaymentInfoToCart
             foreach(var heidelpayPayment in heidelpayPayments)
             {
 
-                var ogonePaymentComponent = new HeidelpayPaymentComponent
+                var heidelpayPaymentComponent = new HeidelpayPaymentComponent
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     PaymentMethod = new EntityReference()
@@ -54,7 +54,7 @@ namespace Heidelpay.Connect.Pipelines.AddPaymentInfoToCart
                     Amount = Money.CreateMoney(heidelpayPayment.Amount)
                 };
                     
-                var command = Proxy.DoCommand(container.AddHeidelpayPayment(cart.ExternalId, ogonePaymentComponent));
+                var command = Proxy.DoCommand(container.AddHeidelpayPayment(cart.ExternalId, heidelpayPaymentComponent));
             }
 
             Sitecore.Commerce.Plugin.Carts.Cart cart1 = GetCart(cart.UserId, cart.ShopName, cart.ExternalId, cart.CustomerId, args.Request.CurrencyCode);

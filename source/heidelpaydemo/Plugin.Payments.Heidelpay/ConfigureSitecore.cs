@@ -16,6 +16,7 @@ namespace Plugin.Payment.Heidelpay
     using Plugin.Payment.Heidelpay.Pipelines.RequestPayment;
     using Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks;
     using Sitecore.Commerce.Core;
+    using Sitecore.Commerce.EntityViews;
     using Sitecore.Commerce.Plugin.Orders;
     using Sitecore.Commerce.Plugin.Payments;
     using Sitecore.Framework.Configuration;
@@ -64,6 +65,11 @@ namespace Plugin.Payment.Heidelpay
                             d.Add<ValidateResponseBlock>();
                             d.Add<HandleResponseBlock>();
                         })
+                         .ConfigurePipeline<IGetEntityViewPipeline>(c =>
+                         {
+                             c.Add<Pipelines.GetEntityView.GetOrderPaymentDetailsViewBlock>()
+                             .After<GetOrderPaymentDetailsViewBlock>();
+                         })
                         .ConfigurePipeline<IRunningPluginsPipeline>(c =>
                         {
                             c.Add<RegisteredPluginBlock>().After<RunningPluginsBlock>();
