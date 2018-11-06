@@ -65,22 +65,5 @@ namespace WebApplication1.Controllers
 
             return Redirect(LinkManager.GetItemUrl(Sitecore.Context.Item));
         }
-                
-
-        public ActionResult ToOrder()
-        {
-            var cart = Cart;
-            cart.Email = "testme@hotmail.com";
-            var result = new OrderServiceProvider().SubmitVisitorOrder(new SubmitVisitorOrderRequest(cart));
-
-            if (!result.Success)
-            {
-                throw new InvalidOperationException(string.Join(",", result.SystemMessages.Select(x => x.Message)));
-            }
-
-            string redirectUrl = new HeidelpayServiceProvider().RequestPayment((CommerceOrder)result.Order);
-
-            return Redirect(redirectUrl);
-        }
     }
 }

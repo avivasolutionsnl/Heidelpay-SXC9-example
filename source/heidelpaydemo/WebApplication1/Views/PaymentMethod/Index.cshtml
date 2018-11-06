@@ -4,27 +4,56 @@
 {
     @Html.Sitecore().FormHandler("PaymentMethod", "Add")
 
-    <fieldset>
+<fieldset>
 
-        @Html.LabelFor(x => x.Party.FirstName);
-        @Html.EditorFor(x => x.Party.FirstName);
+    <span>
+        @Html.LabelFor(x => x.Party.FirstName)
+        @Html.EditorFor(x => x.Party.FirstName)
+    </span>
 
-        @Html.LabelFor(x => x.Party.LastName);
-        @Html.EditorFor(x => x.Party.LastName);
+    <span>
+        @Html.LabelFor(x => x.Party.LastName)
+        @Html.EditorFor(x => x.Party.LastName)
+    </span>
 
-        @Html.LabelFor(x => x.Party.Address1);
-        @Html.EditorFor(x => x.Party.Address1);
+    <span>
+        @Html.LabelFor(x => x.Party.Address1)
+        @Html.EditorFor(x => x.Party.Address1)
+    </span>
 
-        @Html.LabelFor(x => x.Party.ZipPostalCode);
-        @Html.EditorFor(x => x.Party.ZipPostalCode);
+    <span>
+        @Html.LabelFor(x => x.Party.ZipPostalCode)
+        @Html.EditorFor(x => x.Party.ZipPostalCode)
+    </span>
 
-        @Html.LabelFor(x => x.Party.State);
-        @Html.EditorFor(x => x.Party.State);
+    <span>
+        @Html.LabelFor(x => x.Party.City)
+        @Html.EditorFor(x => x.Party.City)
+    </span>
 
-        @Html.LabelFor(x => x.Party.CountryCode);
-        @Html.EditorFor(x => x.Party.CountryCode);
+    <span>
+        @Html.LabelFor(x => x.Party.State)
+        @Html.EditorFor(x => x.Party.State)
+    </span>
 
-        <input type="submit" />
+    <span>
+        @Html.LabelFor(x => x.Party.CountryCode)
+        @Html.EditorFor(x => x.Party.CountryCode)
+    </span>
 
-    </fieldset>
+    <span>
+        @Html.LabelFor(x => x.Party.PhoneNumber)
+        @Html.EditorFor(x => x.Party.PhoneNumber)
+    </span>
+
+    <span>
+        @Html.LabelFor(x => x.Party.Email)
+        @Html.EditorFor(x => x.Party.Email)
+    </span>
+
+    <span>
+        <input type="submit" value="Add" />
+    </span>
+
+</fieldset>
 }

@@ -221,12 +221,17 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Checkout\Cart.cshtml" />
     <Content Include="Views\PaymentMethod\Index.cshtml" />
+    <Content Include="Views\Checkout\PaymentMethod.cshtml" />
+    <Content Include="Views\Checkout\Confirmation.cshtml" />
+    <Content Include="Views\Checkout\Success.cshtml" />
+    <Content Include="Views\Confirmation\Index.cshtml" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
+    <Compile Include="Controllers\ConfirmationController.cs" />
     <Compile Include="Controllers\PaymentMethodController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

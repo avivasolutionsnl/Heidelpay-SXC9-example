@@ -130,6 +130,77 @@ namespace Plugin.Payment.Heidelpay.Pipelines.GetEntityView
                 IsReadOnly = true,
                 RawValue = heidelpayPayment.SettledAt
             });
-       }
+
+            PopulateBillingParty(view, heidelpayPayment);
+        }
+
+        protected virtual void PopulateBillingParty(EntityView view, HeidelpayPaymentComponent heidelpayPayment)
+        {
+            Party billingParty = heidelpayPayment.BillingParty;
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "FirstName",
+                IsReadOnly = true,
+                RawValue = billingParty.FirstName
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "LastName",
+                IsReadOnly = true,
+                RawValue = billingParty.LastName
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "Address1",
+                IsReadOnly = true,
+                RawValue = billingParty.Address1
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "Address2",
+                IsReadOnly = true,
+                RawValue = billingParty.Address2
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "City",
+                IsReadOnly = true,
+                RawValue = billingParty.City
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "State",
+                IsReadOnly = true,
+                RawValue = billingParty.State
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "CountryCode",
+                IsReadOnly = true,
+                RawValue = billingParty.CountryCode,
+                IsHidden = true
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "ZipPostalCode",
+                IsReadOnly = true,
+                RawValue = billingParty.ZipPostalCode
+            });
+
+            view.Properties.Add(new ViewProperty
+            {
+                Name = "PhoneNumber",
+                IsReadOnly = true,
+                RawValue = billingParty.PhoneNumber
+            });
+        }
     }
 }

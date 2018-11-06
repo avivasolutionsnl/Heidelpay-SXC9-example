@@ -23,9 +23,7 @@
 
         @Html.DropDownList("ItemId", Model.SellableItems.Select(s => new SelectListItem { Text = s.DisplayName, Value = s.ItemId.ToString() }))
 
-        <input type="submit" />
+        <input type="submit" value="Add" />
     }
 
-    @Html.ActionLink("Add payment info", "AddPaymentInfo")
-    @Html.ActionLink("Pay", "ToOrder")
 </div>

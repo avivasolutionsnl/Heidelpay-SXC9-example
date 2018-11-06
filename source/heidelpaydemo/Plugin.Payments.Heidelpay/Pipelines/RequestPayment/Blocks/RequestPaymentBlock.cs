@@ -77,8 +77,12 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
                 {"ADDRESS.ZIP", component.BillingParty.ZipPostalCode },
                 {"ADDRESS.CITY", component.BillingParty.City },
                 {"ADDRESS.STATE", component.BillingParty.State },
-                {"ADDRESS.COUNTRY", component.BillingParty.CountryCode }
-            };
+                {"ADDRESS.COUNTRY", component.BillingParty.CountryCode },
+                {"CONTACT.PHONE", component.BillingParty.PhoneNumber },
+                {"CONTACT.MOBILE", component.BillingParty.PhoneNumber },
+                {"CONTACT.EMAIL", component.BillingParty.Email },
+                {"NAME.COMPANY", "Aviva Solutions" }
+              };
         }
 
         private async Task<string> Post(string url, Dictionary<string, string> parameters)

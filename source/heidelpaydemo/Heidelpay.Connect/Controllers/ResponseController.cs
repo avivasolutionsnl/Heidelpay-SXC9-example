@@ -12,7 +12,7 @@ namespace Heidelpay.Connect.Controllers
 
             new HeidelpayServiceProvider().HandleResponse("CommerceEngineDefaultStorefront", dictionary);
 
-            return Content("http://sitecore/bedankt");
+            return Content("http://sitecore/success");
         }
     }
 }
