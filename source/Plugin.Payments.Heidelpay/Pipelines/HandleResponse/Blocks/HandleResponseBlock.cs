@@ -25,7 +25,6 @@ namespace Plugin.Payment.Heidelpay.Pipelines.HandleResponse.Blocks
         {
             var orderId = arg.Parameters["IDENTIFICATION.TRANSACTIONID"];
 
-            // Fulfill pre-condition: get cart
             Order order = await getOrderPipeline.Run(orderId, context).ConfigureAwait(false);
 
             if (order == null)

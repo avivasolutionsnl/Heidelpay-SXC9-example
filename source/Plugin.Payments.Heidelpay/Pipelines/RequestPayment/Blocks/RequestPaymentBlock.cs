@@ -29,7 +29,6 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
         {
             Condition.Requires(arg).IsNotNull($"{this.Name}: The argument cannot be null.");
 
-            // Fulfill pre-condition: get cart
             Order order = await getOrderPipeline.Run(arg.OrderId, context).ConfigureAwait(false);
 
             if (order == null)
@@ -65,6 +64,8 @@ namespace Plugin.Payment.Heidelpay.Pipelines.RequestPayment.Blocks
                 {"TRANSACTION.MODE", policy.TransactionMode },
                 {"PRESENTATION.AMOUNT", order.Totals.GrandTotal.Amount.ToString() },
                 {"PRESENTATION.CURRENCY", "EUR" },
+                // Todo: Hardcoded payment code. Probably need to add this to the 
+                // heidelpaypaymentcomponent and select it in the website checkout.
                 {"PAYMENT.CODE", "CC.DB" },
                 {"SECURITY.SENDER", policy.SecuritySender },
                 {"USER.LOGIN", policy.UserLogin },

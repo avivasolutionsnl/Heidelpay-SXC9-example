@@ -16,7 +16,7 @@ namespace Plugin.Payment.Heidelpay.Pipelines.HandleResponse.Blocks
 
             context.Logger.LogInformation($"Received response from Heidelpay, parameters: {parameterValues}");
             
-            // todo
+            // Todo: Validate repsonse and implement security check.
             return Task.FromResult(arg);
         }
     }
