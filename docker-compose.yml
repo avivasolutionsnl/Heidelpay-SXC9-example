@@ -52,7 +52,7 @@ services:
     - .\cores\xp0_xdb_rebuild:/opt/solr/server/solr/xp0_xdb_rebuild
 
  xconnect:
-  image: avivasolutionsnl.azurecr.io/sxc-xconnect:9.0.2
+  image: sitecore-xconnect
   volumes:
     - .\logs\xconnect:C:\inetpub\wwwroot\xconnect\App_data\Logs
   depends_on:
@@ -60,7 +60,7 @@ services:
     - solr
 
  sitecore:
-  build: ./Docker/sitecore
+  build: sitecore-sitecore
   cpu_count: 6
   volumes:
     - .\logs\sitecore:c:\inetpub\wwwroot\sitecore\App_Data\logs
@@ -74,7 +74,7 @@ services:
     - "8181:80"
 
  commerce:
-  build: ./Docker/commerce
+  build: sitecore-commerce
   cpu_count: 4
   volumes:
     - .\logs\commerce\CommerceAuthoring_Sc9:C:\inetpub\wwwroot\CommerceAuthoring_Sc9\wwwroot\logs

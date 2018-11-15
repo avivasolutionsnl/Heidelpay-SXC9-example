@@ -2,6 +2,8 @@
 
 This repository contains an example implementation of a Sitecore Experience Commerce 9 plugin for the [Heidelpay payment provider](https://www.heidelpay.com)
 
+> This is a very basic, naive implementation and only serves as an example. It should by no means be used in production, for it misses error handling, tracing and only implements the happy flow. 
+
 ## Overview
 This example implements the Heidelpay hCO payment flow, which looks like the following: 
 
@@ -9,28 +11,30 @@ This example implements the Heidelpay hCO payment flow, which looks like the fol
 
 The solutions has the following projects:
 
-1. Plugin.Payment.Heidelpay
+### Plugin.Payment.Heidelpay
 This is the SXC9 Heidelpay plugin and contains most of the interesting stuff.
 
-2. Heidelpay.Connect
+### Heidelpay.Connect
 This library contains a connect API for using the heidelpay functionality from the experience platform.
 
-3. engine
+### engine
 This is a copy of the commerce engine project that is part of the SDK.
 
-4. Plugin.sample.habitat
+### Plugin.sample.habitat
 This is the habitat plugin from the SDK and is used to import the Habitat test catalog.
 
-5. Sitecore.Commerce.ServiceProxy
+### Sitecore.Commerce.ServiceProxy
 The service proxy from the SDK that has been re-generated to contain the Heidelpay specific stuff.
 
-6. website
+### website
 A MVC website with some example MVC controllers and views to demo and test the functionality.
 
 ## Getting started
 
 1. Setup docker
 This example uses the [Aviva sitecore commerce docker images](https://github.com/avivasolutionsnl/sitecore-commerce-docker) for development. Follow the instructions in that repository to build your own commerce docker images and run `docker-compose up` to start the environment.
+
+> You will probably need to update the names of the images in the `docker-compose.yml` file.
 
 2. Modify Heidelpay configuration
 The Heidelpay settings are defined in a Heidelpay policy. These can be modified by editing the environmet files under `source/HeidelpayDemo/engine/data/Environments/Plugin.Habitat.Commerce*.json`. At the bottom of these files there is an element that starts with:
