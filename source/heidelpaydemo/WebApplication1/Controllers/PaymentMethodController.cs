@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using website.Models;
 
-namespace WebApplication1.Controllers
+namespace website.Controllers
 {
     public class PaymentMethodController : CommerceController
     {

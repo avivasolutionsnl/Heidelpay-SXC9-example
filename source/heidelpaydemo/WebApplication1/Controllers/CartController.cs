@@ -15,7 +15,7 @@ using website.Models;
 using Sitecore.Links;
 using Sitecore.Data;
 
-namespace WebApplication1.Controllers
+namespace website.Controllers
 {
     public class CartController : CommerceController
     {
@@ -25,19 +25,33 @@ namespace WebApplication1.Controllers
         {
             IEnumerable<CommerceSellableItemSearchResultItem> sellableItems;
 
-            var index = new CommerceSearchManager().GetIndex();
-
-            using (var searchContext = index.CreateSearchContext())
+            try
             {
-                sellableItems = searchContext.GetQueryable<CommerceSellableItemSearchResultItem>()
-                    .Where(x => x.CommerceSearchItemType == CommerceSearchItemType.SellableItem)
-                    .ToList();
+                var index = new CommerceSearchManager().GetIndex();
+
+                using (var searchContext = index.CreateSearchContext())
+                {
+                    sellableItems = searchContext.GetQueryable<CommerceSellableItemSearchResultItem>()
+                        .Where(x => x.CommerceSearchItemType == CommerceSearchItemType.SellableItem)
+                        .ToList();
+                }
             }
-            
+            catch
+            {
+                sellableItems = new List<CommerceSellableItemSearchResultItem>
+                {
+                    new CommerceSellableItemSearchResultItem
+                    {
+                        DisplayName = "Vertus 6 1 2\" 3-Way Floorstanding Speaker",
+                        ItemId = new ID("{7B82EDB1-9D0F-6CF3-046F-4E90D69C4259}")
+                    }
+                };
+            }
+
             return View(new CartModel
             {
                 Cart = Cart,
-                SellableItems = sellableItems
+                SellableItems = sellableItems 
             });
         }
 
